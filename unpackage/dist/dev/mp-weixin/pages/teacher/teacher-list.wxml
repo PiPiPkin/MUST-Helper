@@ -1,0 +1,1 @@
+<view class="container"><view class="header"><view data-event-opts="{{[['tap',[['goBack',['$event']]]]]}}" class="back-btn" bindtap="__e"><text>←</text></view><text class="header-title">教师列表</text></view><view class="content"><text>教师列表页面</text></view></view>

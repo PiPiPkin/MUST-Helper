@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/course/index",
+    "pages/canteen/index",
+    "pages/housing/index",
+    "pages/message/index",
+    "pages/user/index",
+    "pages/course/course-list",
+    "pages/course/course-detail",
+    "pages/canteen/shop-list",
+    "pages/canteen/shop-detail",
+    "pages/teacher/teacher-list"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "澳科保姆",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#3498db",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/course/index",
+        "text": "选课榜"
+      },
+      {
+        "pagePath": "pages/canteen/index",
+        "text": "美食榜"
+      },
+      {
+        "pagePath": "pages/housing/index",
+        "text": "租房榜"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}
