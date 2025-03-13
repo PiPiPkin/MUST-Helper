@@ -1,0 +1,115 @@
+{
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "首页"
+            }
+        },
+        {
+            "path": "pages/course/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "选课榜"
+            }
+        },
+        {
+            "path": "pages/canteen/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "美食榜"
+            }
+        },
+        {
+            "path": "pages/housing/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "租房榜"
+            }
+        },
+        {
+            "path": "pages/message/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "消息"
+            }
+        },
+        {
+            "path": "pages/user/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "我的"
+            }
+        },
+        {
+            "path": "pages/course/course-list",
+            "style": {
+                "navigationBarTitleText": "课程列表",
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/course/course-detail",
+            "style": {
+                "navigationBarTitleText": "课程详情",
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/canteen/shop-list",
+            "style": {
+                "navigationBarTitleText": "店铺列表",
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/canteen/shop-detail",
+            "style": {
+                "navigationBarTitleText": "店铺详情",
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/teacher/teacher-list",
+            "style": {
+                "navigationBarTitleText": "教师列表",
+                "navigationStyle": "custom"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "澳科保姆",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#3498db",
+        "backgroundColor": "#ffffff",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/course/index",
+                "text": "选课榜"
+            },
+            {
+                "pagePath": "pages/canteen/index",
+                "text": "美食榜"
+            },
+            {
+                "pagePath": "pages/housing/index",
+                "text": "租房榜"
+            },
+            {
+                "pagePath": "pages/message/index",
+                "text": "消息"
+            },
+            {
+                "pagePath": "pages/user/index",
+                "text": "我的"
+            }
+        ]
+    }
+}
