@@ -7,8 +7,8 @@
 		
 		<!-- 搜索框 -->
 		<view class="search-box">
-			<input type="text" placeholder="搜索课程或教授..." />
-			<text class="search-icon">🔍</text>
+			<input type="text" placeholder="搜索课程或教授..." v-model="searchText" @confirm="searchCourse" />
+			<text class="search-icon" @click="searchCourse">🔍</text>
 		</view>
 		
 		<!-- 学院介绍 -->
@@ -70,25 +70,89 @@
 export default {
 	data() {
 		return {
-			statusBarHeight: 20
+			statusBarHeight: 20,
+			searchText: ''  // 添加搜索文本变量
 		}
 	},
+	// 在onLoad方法中添加
 	onLoad() {
-		// 获取状态栏高度
-		try {
-			const systemInfo = uni.getSystemInfoSync();
-			if (systemInfo && systemInfo.statusBarHeight) {
-				this.statusBarHeight = systemInfo.statusBarHeight;
-			}
-		} catch (error) {
-			console.error('获取系统信息失败:', error);
-		}
-	},
+	    // 获取状态栏高度
+	    try {
+	        const systemInfo = uni.getSystemInfoSync();
+	        if (systemInfo && systemInfo.statusBarHeight) {
+	            this.statusBarHeight = systemInfo.statusBarHeight;
+	        }
+	        
+	        // 打印当前页面路径
+	        const pages = getCurrentPages();
+	        const currentPage = pages[pages.length - 1];
+	        console.log('当前页面路径:', currentPage.route);
+	        console.log('系统信息:', systemInfo);
+	    } catch (error) {
+	        console.error('获取系统信息失败:', error);
+	    }
+	}, // 这里缺少了逗号
 	methods: {
-		goToCourseList(collegeId) {
-			uni.navigateTo({
-				url: `/pages/course/course-list?collegeId=${collegeId}`
+		// 添加搜索方法
+		searchCourse() {
+			if (!this.searchText.trim()) {
+				return;
+			}
+			
+			console.log('搜索课程:', this.searchText);
+			uni.showToast({
+				title: '搜索功能开发中',
+				icon: 'none',
+				duration: 2000
 			});
+		},
+		
+		goToCourseList(collegeId) {
+			// 将collegeId转换为对应的数字ID
+			let deptId;
+			switch(collegeId) {
+				case 'engineering': deptId = 1; break;
+				case 'business': deptId = 2; break;
+				case 'arts': deptId = 3; break;
+				case 'education': deptId = 4; break;
+				default: deptId = 1;
+			}
+			
+			console.log('跳转到学院课程列表，学院ID:', deptId);
+			
+			// 尝试多种路径格式
+			try {
+				// 方式1：使用相对路径
+				uni.navigateTo({
+					url: './course-list?deptId=' + deptId,
+					fail: (err) => {
+						console.error('相对路径跳转失败:', err);
+						
+						// 方式2：使用绝对路径
+						uni.navigateTo({
+							url: '/pages/course/course-list?deptId=' + deptId,
+							fail: (err2) => {
+								console.error('绝对路径跳转失败:', err2);
+								
+								// 方式3：使用redirectTo
+								uni.redirectTo({
+									url: '/pages/course/course-list?deptId=' + deptId,
+									fail: (err3) => {
+										console.error('redirectTo跳转失败:', err3);
+										uni.showToast({
+											title: '跳转失败，请稍后再试',
+											icon: 'none',
+											duration: 2000
+										});
+									}
+								});
+							}
+						});
+					}
+				});
+			} catch (e) {
+				console.error('跳转异常:', e);
+			}
 		}
 	}
 }

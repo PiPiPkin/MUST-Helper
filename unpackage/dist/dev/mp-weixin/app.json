@@ -4,6 +4,7 @@
     "pages/course/index",
     "pages/canteen/index",
     "pages/housing/index",
+    "pages/housing/area-detail",
     "pages/message/index",
     "pages/user/index",
     "pages/course/course-list",

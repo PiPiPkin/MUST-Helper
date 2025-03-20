@@ -24,8 +24,13 @@
         {
             "path": "pages/housing/index",
             "style": {
-                "navigationStyle": "custom",
-                "navigationBarTitleText": "租房榜"
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/housing/area-detail",
+            "style": {
+                "navigationStyle": "custom"
             }
         },
         {

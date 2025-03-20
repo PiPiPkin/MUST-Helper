@@ -121,31 +121,32 @@
 					<text class="close-btn" @click="hideRatingPanel">×</text>
 				</view>
 				
+				<!-- 修改评分面板中的星星评分逻辑 -->
 				<view class="panel-body">
-					<view class="panel-rating-item">
-						<text class="panel-rating-label">容易度</text>
-						<view class="panel-rating-stars">
-							<text v-for="n in 5" :key="n" class="panel-star" 
-								  :class="{ 'filled': n <= userRating.difficulty }"
-								  @click="userRating.difficulty = n">★</text>
-						</view>
-					</view>
-					<view class="panel-rating-item">
-						<text class="panel-rating-label">收获</text>
-						<view class="panel-rating-stars">
-							<text v-for="n in 5" :key="n" class="panel-star" 
-								  :class="{ 'filled': n <= userRating.harvest }"
-								  @click="userRating.harvest = n">★</text>
-						</view>
-					</view>
-					<view class="panel-rating-item">
-						<text class="panel-rating-label">拿分</text>
-						<view class="panel-rating-stars">
-							<text v-for="n in 5" :key="n" class="panel-star" 
-								  :class="{ 'filled': n <= userRating.score }"
-								  @click="userRating.score = n">★</text>
-						</view>
-					</view>
+				    <view class="panel-rating-item">
+				        <text class="panel-rating-label">容易度</text>
+				        <view class="panel-rating-stars">
+				            <text v-for="n in 5" :key="n" class="panel-star" 
+				                  :class="{ 'filled': n <= userRating.difficulty }"
+				                  @click="userRating.difficulty = n">★</text>
+				        </view>
+				    </view>
+				    <view class="panel-rating-item">
+				        <text class="panel-rating-label">收获</text>
+				        <view class="panel-rating-stars">
+				            <text v-for="n in 5" :key="n" class="panel-star" 
+				                  :class="{ 'filled': n <= userRating.harvest }"
+				                  @click="userRating.harvest = n">★</text>
+				        </view>
+				    </view>
+				    <view class="panel-rating-item">
+				        <text class="panel-rating-label">拿分</text>
+				        <view class="panel-rating-stars">
+				            <text v-for="n in 5" :key="n" class="panel-star" 
+				                  :class="{ 'filled': n <= userRating.score }"
+				                  @click="userRating.score = n">★</text>
+				        </view>
+				    </view>
 				</view>
 				
 				<button class="submit-rating-btn" @click="submitRating">提交评分</button>
@@ -193,17 +194,56 @@ export default {
 	onLoad(options) {
 		console.log('课程详情页面加载，参数:', options);
 		
+		// 修改参数处理逻辑，支持通过code和name参数加载课程
 		if (options.courseId) {
-			this.courseId = parseInt(options.courseId);
-			this.getCourseDetail();
+		// 原有逻辑：通过courseId加载
+		this.courseId = parseInt(options.courseId);
+		this.getCourseDetail();
+		} else if (options.code) {
+		// 新增逻辑：通过code加载
+		console.log('通过课程代码加载:', options.code);
+		
+		// 根据课程代码查找对应的课程ID
+		const courseMap = {
+		'CS460': 101,
+		'CS462': 102,
+		'CS463': 103,
+		'BUS201': 201,
+		'BUS302': 202,
+		'ART101': 301,
+		'ART202': 302,
+		'GEN101': 401,
+		'GEN202': 402
+		};
+		
+		this.courseId = courseMap[options.code] || 0;
+		
+		if (this.courseId) {
+		console.log('找到对应课程ID:', this.courseId);
+		this.getCourseDetail();
+		
+		// 如果有课程名称，可以预先设置
+		if (options.name) {
+		this.course.name = decodeURIComponent(options.name);
+		this.course.code = options.code;
+		}
 		} else {
-			uni.showToast({
-				title: '课程ID不存在',
-				icon: 'none'
-			});
-			setTimeout(() => {
-				this.goBack();
-			}, 1500);
+		uni.showToast({
+		title: '未找到课程信息',
+		icon: 'none'
+		});
+		setTimeout(() => {
+		this.goBack();
+		}, 1500);
+		}
+		} else {
+		uni.showToast({
+		title: '课程信息不完整',
+		icon: 'none'
+		});
+		setTimeout(() => {
+		this.goBack();
+		}, 1500);
 		}
 	},
 	methods: {
@@ -341,24 +381,56 @@ export default {
 			this.showRating = false;
 		},
 		submitRating() {
-			if (this.userRating.difficulty === 0 || this.userRating.harvest === 0 || this.userRating.score === 0) {
+			// 确保至少有一项评分不为0
+			if (this.userRating.difficulty === 0 && this.userRating.harvest === 0 && this.userRating.score === 0) {
 				uni.showToast({
-					title: '请完成所有评分项',
+					title: '请至少评分一项',
 					icon: 'none'
 				});
 				return;
 			}
 			
-			// 使用精确计算方法计算平均分
-			const avgRating = Number(((this.userRating.difficulty + this.userRating.harvest + this.userRating.score) / 3).toFixed(1));
+			// 计算平均分时，只计算非0项
+			let totalScore = 0;
+			let validItems = 0;
+			
+			if (this.userRating.difficulty > 0) {
+				totalScore += this.userRating.difficulty;
+				validItems++;
+			}
+			
+			if (this.userRating.harvest > 0) {
+				totalScore += this.userRating.harvest;
+				validItems++;
+			}
+			
+			if (this.userRating.score > 0) {
+				totalScore += this.userRating.score;
+				validItems++;
+			}
+			
+			// 计算平均分 - 即使所有项都是1星也能正常计算
+			const avgRating = validItems > 0 ? Number((totalScore / validItems).toFixed(1)) : 0;
 			
 			console.log('提交评分:', this.userRating, '平均分:', avgRating);
 			
 			// 使用精确计算更新评分
 			const newCount = this.course.reviewCount + 1;
-			this.course.difficultyRating = Number(((this.course.difficultyRating * this.course.reviewCount + this.userRating.difficulty) / newCount).toFixed(1));
-			this.course.harvestRating = Number(((this.course.harvestRating * this.course.reviewCount + this.userRating.harvest) / newCount).toFixed(1));
-			this.course.scoreRating = Number(((this.course.scoreRating * this.course.reviewCount + this.userRating.score) / newCount).toFixed(1));
+			
+			// 更新各项评分 - 确保1星评分也能正常更新
+			if (this.userRating.difficulty > 0) {
+				this.course.difficultyRating = Number(((this.course.difficultyRating * this.course.reviewCount + this.userRating.difficulty) / newCount).toFixed(1));
+			}
+			
+			if (this.userRating.harvest > 0) {
+				this.course.harvestRating = Number(((this.course.harvestRating * this.course.reviewCount + this.userRating.harvest) / newCount).toFixed(1));
+			}
+			
+			if (this.userRating.score > 0) {
+				this.course.scoreRating = Number(((this.course.scoreRating * this.course.reviewCount + this.userRating.score) / newCount).toFixed(1));
+			}
+			
+			// 更新总评分
 			this.course.rating = Number(((this.course.rating * this.course.reviewCount + avgRating) / newCount).toFixed(1));
 			this.course.reviewCount = newCount;
 			
