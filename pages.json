@@ -34,10 +34,37 @@
             }
         },
         {
+            "path": "pages/housing/house-detail",
+            "style": {
+                "navigationStyle": "custom"
+            }
+        },
+        {
             "path": "pages/message/index",
             "style": {
                 "navigationStyle": "custom",
-                "navigationBarTitleText": "消息"
+                "navigationBarTitleText": "消息中心"
+            }
+        },
+        {
+            "path": "pages/message/notification",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "通知"
+            }
+        },
+        {
+            "path": "pages/message/comment",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "评论"
+            }
+        },
+        {
+            "path": "pages/message/like",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "赞"
             }
         },
         {

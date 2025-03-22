@@ -11,6 +11,10 @@
 	justify-content: space-between;
 	align-items: center;
 }
+.back-btn {
+	color: #ffffff;
+	font-size: 36rpx;
+}
 .page-title {
 	color: #ffffff;
 	font-size: 36rpx;
@@ -26,60 +30,59 @@
 	color: #ffffff;
 	font-size: 32rpx;
 }
-.message-cards {
+.notification-list {
 	padding: 20rpx;
 }
-.message-card {
+.notification-item {
 	background-color: #ffffff;
 	border-radius: 12rpx;
 	margin-bottom: 20rpx;
-	padding: 30rpx;
+	padding: 20rpx;
 	box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
 	display: flex;
-	align-items: center;
-	position: relative;
-}
-.card-icon {
-	font-size: 48rpx;
-	margin-right: 20rpx;
+	align-items: flex-start;
 }
 .notification-icon {
-	color: #3498db;
+	font-size: 40rpx;
+	margin-right: 20rpx;
+	padding: 10rpx;
+	border-radius: 50%;
 }
-.comment-icon {
-	color: #2ecc71;
+.system {
+	background-color: #3498db;
+	color: #ffffff;
 }
-.like-icon {
-	color: #e74c3c;
+.activity {
+	background-color: #f39c12;
+	color: #ffffff;
 }
-.card-content {
+.update {
+	background-color: #2ecc71;
+	color: #ffffff;
+}
+.notification-content {
 	flex: 1;
 }
-.card-title {
+.notification-title {
 	font-size: 32rpx;
 	font-weight: bold;
 	color: #333333;
-	margin-bottom: 6rpx;
+	margin-bottom: 10rpx;
 }
-.card-desc {
+.notification-desc {
+	font-size: 28rpx;
+	color: #666666;
+	margin-bottom: 10rpx;
+	line-height: 1.5;
+}
+.notification-time {
 	font-size: 24rpx;
 	color: #999999;
 }
-.card-badge {
-	background-color: #e74c3c;
-	color: #ffffff;
-	font-size: 24rpx;
-	height: 40rpx;
-	min-width: 40rpx;
-	border-radius: 20rpx;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0 10rpx;
-	margin-right: 20rpx;
-}
-.card-arrow {
-	font-size: 36rpx;
+.empty-tip {
+	text-align: center;
+	padding: 40rpx;
 	color: #999999;
+	font-size: 28rpx;
 }
 

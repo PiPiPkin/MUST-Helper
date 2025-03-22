@@ -102,22 +102,6 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.__map(_vm.navItems, function (item, index) {
-    var $orig = _vm.__get_orig(item)
-    var g0 = item.name.substr(0, 1)
-    return {
-      $orig: $orig,
-      g0: g0,
-    }
-  })
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        l0: l0,
-      },
-    }
-  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -184,51 +168,20 @@ exports.default = void 0;
 //
 var _default = {
   data: function data() {
-    return {
-      statusBarHeight: 20,
-      // 默认值
-      navItems: [{
-        name: '选课榜',
-        color: '#3498db',
-        url: '/pages/course/index'
-      }, {
-        name: '美食榜',
-        color: '#e74c3c',
-        url: '/pages/canteen/index'
-      }, {
-        name: '租房榜',
-        color: '#2ecc71',
-        url: '/pages/housing/index'
-      }]
-    };
+    return {};
   },
   onLoad: function onLoad() {
-    // 安全地获取状态栏高度
-    try {
-      var systemInfo = uni.getSystemInfoSync();
-      if (systemInfo && systemInfo.statusBarHeight) {
-        this.statusBarHeight = systemInfo.statusBarHeight;
-      }
-      console.log('状态栏高度:', this.statusBarHeight);
-    } catch (error) {
-      console.error('获取系统信息失败:', error);
-    }
+    // 页面加载时自动跳转到选课榜页面
+    setTimeout(function () {
+      uni.switchTab({
+        url: '/pages/course/index'
+      });
+    }, 100);
   },
   methods: {
-    navigateTo: function navigateTo(url) {
-      console.log('导航到:', url);
+    navigateTo: function navigateTo(page) {
       uni.switchTab({
-        url: url,
-        success: function success() {
-          console.log('导航成功');
-        },
-        fail: function fail(err) {
-          console.error('导航失败:', err);
-          uni.showToast({
-            title: '页面跳转失败',
-            icon: 'none'
-          });
-        }
+        url: "/pages/".concat(page, "/index")
       });
     }
   }

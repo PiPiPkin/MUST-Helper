@@ -1,23 +1,23 @@
 <template>
 	<view class="container">
-		<!-- 顶部导航栏 -->
-		<view class="header" :style="{ paddingTop: statusBarHeight + 'px' }">
-			<text class="header-title">校园点评助手</text>
+		<view class="header">
+			<text class="title">澳科保姆</text>
 		</view>
 		
-		<!-- 简单提示信息 -->
-		<view class="welcome-message">
-			<text>欢迎使用澳科保姆</text>
-			<text class="sub-message">校园生活好帮手</text>
-		</view>
-		
-		<!-- 功能导航 -->
-		<view class="nav-grid">
-			<view class="nav-item" v-for="(item, index) in navItems" :key="index" @click="navigateTo(item.url)">
-				<view class="nav-icon" :style="{ backgroundColor: item.color }">
-					<text class="icon-text">{{item.name.substr(0,1)}}</text>
-				</view>
-				<text>{{item.name}}</text>
+		<view class="content">
+			<view class="nav-card" @click="navigateTo('course')">
+				<text class="card-title">选课榜</text>
+				<text class="card-desc">课程评价与选课推荐</text>
+			</view>
+			
+			<view class="nav-card" @click="navigateTo('canteen')">
+				<text class="card-title">美食榜</text>
+				<text class="card-desc">校园美食与餐厅点评</text>
+			</view>
+			
+			<view class="nav-card" @click="navigateTo('housing')">
+				<text class="card-title">租房榜</text>
+				<text class="card-desc">周边房源与租房攻略</text>
 			</view>
 		</view>
 	</view>
@@ -27,53 +27,21 @@
 export default {
 	data() {
 		return {
-			statusBarHeight: 20, // 默认值
-			navItems: [
-				{
-					name: '选课榜',
-					color: '#3498db',
-					url: '/pages/course/index'
-				},
-				{
-					name: '美食榜',
-					color: '#e74c3c',
-					url: '/pages/canteen/index'
-				},
-				{
-					name: '租房榜',
-					color: '#2ecc71',
-					url: '/pages/housing/index'
-				}
-			]
+			
 		}
 	},
 	onLoad() {
-		// 安全地获取状态栏高度
-		try {
-			const systemInfo = uni.getSystemInfoSync();
-			if (systemInfo && systemInfo.statusBarHeight) {
-				this.statusBarHeight = systemInfo.statusBarHeight;
-			}
-			console.log('状态栏高度:', this.statusBarHeight);
-		} catch (error) {
-			console.error('获取系统信息失败:', error);
-		}
+		// 页面加载时自动跳转到选课榜页面
+		setTimeout(() => {
+			uni.switchTab({
+				url: '/pages/course/index'
+			});
+		}, 100);
 	},
 	methods: {
-		navigateTo(url) {
-			console.log('导航到:', url);
+		navigateTo(page) {
 			uni.switchTab({
-				url: url,
-				success: function() {
-					console.log('导航成功');
-				},
-				fail: function(err) {
-					console.error('导航失败:', err);
-					uni.showToast({
-						title: '页面跳转失败',
-						icon: 'none'
-					});
-				}
+				url: `/pages/${page}/index`
 			});
 		}
 	}
@@ -84,86 +52,42 @@ export default {
 .container {
 	min-height: 100vh;
 	background-color: #f5f5f5;
-	padding-top: 120rpx;
+	padding: 30rpx;
 }
 
 .header {
-	background-color: #3498db;
-	padding: 20rpx;
+	padding: 40rpx 0;
 	text-align: center;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 100;
 }
 
-.header-title {
-	color: #ffffff;
-	font-size: 36rpx;
+.title {
+	font-size: 48rpx;
 	font-weight: bold;
+	color: #3498db;
 }
 
-.welcome-message {
-	margin: 50rpx 30rpx;
-	text-align: center;
+.content {
+	margin-top: 60rpx;
+}
+
+.nav-card {
 	background-color: #ffffff;
-	padding: 40rpx;
-	border-radius: 20rpx;
-	box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+	padding: 30rpx;
+	border-radius: 12rpx;
+	margin-bottom: 30rpx;
+	box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
 }
 
-.welcome-message text {
-	font-size: 40rpx;
+.card-title {
+	font-size: 36rpx;
 	font-weight: bold;
 	color: #333333;
 	display: block;
+	margin-bottom: 10rpx;
 }
 
-.sub-message {
-	font-size: 28rpx !important;
-	color: #666666 !important;
-	font-weight: normal !important;
-	margin-top: 20rpx;
-}
-
-.nav-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 20rpx;
-	padding: 30rpx;
-	background-color: #ffffff;
-	margin: 30rpx;
-	border-radius: 20rpx;
-	box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
-}
-
-.nav-item {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 10rpx;
-	padding: 20rpx 0;
-}
-
-.nav-icon {
-	width: 100rpx;
-	height: 100rpx;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.icon-text {
-	color: #ffffff;
-	font-size: 40rpx;
-	font-weight: bold;
-}
-
-.nav-item text {
+.card-desc {
 	font-size: 28rpx;
-	color: #333333;
-	margin-top: 10rpx;
+	color: #666666;
 }
 </style>
