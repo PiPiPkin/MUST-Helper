@@ -15,7 +15,12 @@
     "pages/course/course-detail",
     "pages/canteen/shop-list",
     "pages/canteen/shop-detail",
-    "pages/teacher/teacher-list"
+    "pages/teacher/teacher-list",
+    "pages/user/edit-profile",
+    "pages/user/my-reviews",
+    "pages/user/about",
+    "pages/user/agreement",
+    "pages/user/privacy"
   ],
   "subPackages": [],
   "window": {

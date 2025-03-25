@@ -1,0 +1,216 @@
+
+.container {
+	min-height: 100vh;
+	background-color: #f5f5f5;
+	padding-top: 120rpx;
+}
+.header {
+	background-color: #3498db;
+	padding: 20rpx;
+	display: flex;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+.back-btn {
+	color: #ffffff;
+	font-size: 36rpx;
+	padding: 0 20rpx;
+}
+.header-title {
+	color: #ffffff;
+	font-size: 36rpx;
+	font-weight: bold;
+	flex: 1;
+	text-align: center;
+}
+.search-box {
+	margin: 20rpx;
+	position: relative;
+	background-color: #ffffff;
+	border-radius: 12rpx;
+	padding: 20rpx;
+	box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.1);
+}
+.search-box input {
+	padding-right: 60rpx;
+	height: 60rpx;
+	font-size: 28rpx;
+}
+.search-icon {
+	position: absolute;
+	right: 20rpx;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	        transform: translateY(-50%);
+	color: #999;
+}
+.area-info-card {
+	background-color: #ffffff;
+	border-radius: 12rpx;
+	padding: 30rpx;
+	margin-bottom: 20rpx;
+	box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+.area-info-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	margin-bottom: 20rpx;
+	color: #333;
+}
+.area-info-stats {
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 20rpx;
+}
+.area-stat {
+	text-align: center;
+}
+.stat-value {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #f39c12;
+	display: block;
+}
+.stat-label {
+	font-size: 24rpx;
+	color: #666;
+	margin-top: 8rpx;
+}
+.area-info-desc {
+	font-size: 26rpx;
+	color: #666;
+	line-height: 1.6;
+}
+.filter-bar {
+	display: flex;
+	background-color: #ffffff;
+	padding: 20rpx 30rpx;
+	margin-bottom: 20rpx;
+	border-radius: 8rpx;
+	box-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+}
+.filter-item {
+	padding: 10rpx 30rpx;
+	font-size: 28rpx;
+	color: #666;
+	border-radius: 30rpx;
+	margin-right: 20rpx;
+}
+.filter-item.active {
+	background-color: #f39c12;
+	color: #ffffff;
+}
+.housing-list {
+	padding: 20rpx;
+}
+.housing-card {
+	background-color: #ffffff;
+	border-radius: 12rpx;
+	margin-bottom: 20rpx;
+	padding: 24rpx;
+	box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.1);
+	transition: all 0.3s ease;
+}
+.housing-card:hover {
+	-webkit-transform: translateY(-2rpx);
+	        transform: translateY(-2rpx);
+	box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+}
+.housing-card-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 16rpx;
+}
+.housing-name {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333333;
+}
+.housing-tag {
+	font-size: 24rpx;
+	color: #666666;
+	background-color: #f5f5f5;
+	padding: 4rpx 12rpx;
+	border-radius: 6rpx;
+}
+.housing-card-body {
+	padding: 12rpx 0;
+}
+.housing-info {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12rpx;
+}
+.info-area {
+	font-size: 26rpx;
+	color: #666666;
+}
+.info-divider {
+	margin: 0 12rpx;
+	color: #dddddd;
+}
+.info-text {
+	font-size: 26rpx;
+	color: #666666;
+}
+.housing-rating {
+	display: flex;
+	align-items: center;
+}
+.rating-stars {
+	display: flex;
+	margin-right: 12rpx;
+}
+.star {
+	color: #dddddd;
+	font-size: 28rpx;
+	margin-right: 2rpx;
+}
+.star.active {
+	color: #f39c12;
+}
+.rating-value {
+	font-size: 28rpx;
+	color: #f39c12;
+	font-weight: bold;
+	margin-right: 8rpx;
+}
+.review-count {
+	font-size: 24rpx;
+	color: #999999;
+}
+.housing-card-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 16rpx;
+	padding-top: 16rpx;
+	border-top: 1rpx solid #f5f5f5;
+}
+.price-text {
+	font-size: 32rpx;
+	color: #e74c3c;
+	font-weight: bold;
+}
+.action-btn {
+	font-size: 24rpx;
+	color: #3498db;
+	padding: 8rpx 16rpx;
+	border: 1rpx solid #3498db;
+	border-radius: 6rpx;
+}
+.loading, .empty {
+	text-align: center;
+	padding: 60rpx;
+	color: #999999;
+	font-size: 28rpx;
+	background-color: #ffffff;
+	border-radius: 12rpx;
+	margin: 20rpx;
+}
+

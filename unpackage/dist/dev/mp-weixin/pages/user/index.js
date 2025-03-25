@@ -135,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -154,12 +154,134 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
-    return {};
+    return {
+      userInfo: {
+        nickname: '',
+        userId: '',
+        avatar: '/static/avatar.png'
+      },
+      avatarUrl: getApp().globalData.userAvatar
+    };
+  },
+  onLoad: function onLoad() {
+    this.generateRandomUser();
+    // 确保头像路径正确加载
+    if (!this.avatarUrl) {
+      this.avatarUrl = '/static/avatar.png';
+    }
+  },
+  methods: {
+    generateRandomUser: function generateRandomUser() {
+      // 澳科大相关元素
+      var prefixes = ['澳科', '科大', '横琴', '氹仔', 'MUST', '澳大', '科技'];
+      var suffixes = ['学子', '同学', '校友', '研究生', '博士', '教授', '学霸'];
+
+      // 随机生成昵称
+      var randomPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+      var randomSuffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+      var randomNum = Math.floor(Math.random() * 1000);
+      this.userInfo.nickname = "".concat(randomPrefix).concat(randomSuffix).concat(randomNum);
+      this.userInfo.userId = "MUST".concat(Math.floor(10000 + Math.random() * 90000));
+    },
+    editUserInfo: function editUserInfo() {
+      uni.navigateTo({
+        url: '/pages/user/edit-profile'
+      });
+    },
+    navigateTo: function navigateTo(url) {
+      if (url === '/pages/user/my-favorites' || url === '/pages/user/my-history') {
+        uni.showToast({
+          title: '正在快马加鞭开发中啦，请再等等哦',
+          icon: 'none',
+          duration: 2000
+        });
+        return;
+      }
+      uni.navigateTo({
+        url: url
+      });
+    },
+    logout: function logout() {
+      uni.showModal({
+        title: '提示',
+        content: '确定要退出登录吗？',
+        success: function success(res) {
+          if (res.confirm) {
+            // 这里可以添加退出登录的逻辑
+            uni.showToast({
+              title: '已退出登录',
+              icon: 'success'
+            });
+          }
+        }
+      });
+    }
   }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

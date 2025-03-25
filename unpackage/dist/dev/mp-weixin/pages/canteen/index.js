@@ -102,20 +102,20 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.getRandomColor()
   var l0 = _vm.__map(_vm.filteredCanteens, function (item, index) {
     var $orig = _vm.__get_orig(item)
-    var g0 = item.rating.toFixed(1)
-    var g1 = Math.round(item.rating)
+    var g0 = item.name.slice(0, 2)
     return {
       $orig: $orig,
       g0: g0,
-      g1: g1,
     }
   })
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
+        m0: m0,
         l0: l0,
       },
     }
@@ -159,11 +159,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
-//
-//
-//
-//
 //
 //
 //
@@ -249,6 +244,10 @@ var _default = {
       uni.navigateTo({
         url: "/pages/canteen/shop-list?canteenId=".concat(canteenId)
       });
+    },
+    getRandomColor: function getRandomColor() {
+      var colors = ['#3498db', '#e74c3c', '#9b59b6', '#f39c12', '#2ecc71'];
+      return colors[Math.floor(Math.random() * colors.length)];
     }
   }
 };

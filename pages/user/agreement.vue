@@ -1,0 +1,164 @@
+<template>
+	<view class="container">
+		<view class="top-header">
+			<view class="back-btn" @click="goBack">
+				<text>←</text>
+			</view>
+			<text class="page-title">用户协议</text>
+		</view>
+		
+		<view class="agreement-content">
+			<view class="agreement-title">澳科保姆用户协议</view>
+			<view class="agreement-date">更新日期：2023年11月15日</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">1. 协议的接受与修改</view>
+				<view class="section-content">
+					<text>欢迎使用澳科保姆！本协议是您与澳科保姆之间关于使用本应用服务所订立的协议。请您仔细阅读本协议，您点击"同意"按钮或使用本应用，即视为您已阅读并同意本协议的全部条款。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">2. 账号注册与安全</view>
+				<view class="section-content">
+					<text>2.1 您在注册时应当提供真实、准确、完整的个人资料，并保持资料的及时更新。</text>
+					<text>2.1 您在注册时应当提供真实、准确、完整的个人资料，并保持资料的及时更新。</text>
+					<text>2.2 您应当妥善保管账号及密码信息，因您保管不善可能导致遭受盗号或密码失窃，责任由您自行承担。</text>
+					<text>2.3 您在使用本应用过程中，必须遵循国家法律法规，不得利用本应用从事违法违规行为。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">3. 用户内容</view>
+				<view class="section-content">
+					<text>3.1 用户内容是指您在使用本应用过程中发布的所有内容，包括但不限于评价、评论、图片等。</text>
+					<text>3.2 您应对您发布的内容负责，保证内容的真实性、合法性和无害性。</text>
+					<text>3.3 本应用有权但无义务对用户发布的内容进行审核，有权删除违反法律法规或本协议的内容。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">4. 隐私保护</view>
+				<view class="section-content">
+					<text>4.1 我们重视您的隐私保护，会采取合理措施保护您的个人信息安全。</text>
+					<text>4.2 我们会按照《隐私政策》收集、使用、存储和共享您的个人信息，请您仔细阅读并了解。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">5. 知识产权</view>
+				<view class="section-content">
+					<text>5.1 本应用的所有内容，包括但不限于文字、图片、音频、视频、软件、程序、版面设计等，均受知识产权法律法规保护。</text>
+					<text>5.2 未经本应用或相关权利人许可，您不得以任何方式使用、复制、修改、传播本应用的内容。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">6. 免责声明</view>
+				<view class="section-content">
+					<text>6.1 本应用仅为用户提供信息分享平台，对用户发布的内容不代表本应用的观点或立场。</text>
+					<text>6.2 本应用不保证服务不会中断，对服务中断导致的损失不承担责任。</text>
+					<text>6.3 用户因使用本应用而产生的任何纠纷，由用户自行解决，本应用不承担任何责任。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">7. 协议终止</view>
+				<view class="section-content">
+					<text>7.1 您有权在任何时候终止使用本应用服务。</text>
+					<text>7.2 如您违反本协议，本应用有权终止向您提供服务。</text>
+				</view>
+			</view>
+			
+			<view class="agreement-section">
+				<view class="section-title">8. 法律适用与争议解决</view>
+				<view class="section-content">
+					<text>8.1 本协议的订立、执行和解释及争议的解决均适用中华人民共和国法律。</text>
+					<text>8.2 如双方就本协议内容或执行发生争议，应友好协商解决；协商不成时，任何一方均可向有管辖权的人民法院提起诉讼。</text>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+export default {
+	data() {
+		return {}
+	},
+	methods: {
+		goBack() {
+			uni.navigateBack();
+		}
+	}
+}
+</script>
+
+<style>
+.container {
+	min-height: 100vh;
+	background-color: #f5f5f5;
+}
+
+.top-header {
+	background-color: #3498db;
+	padding: 20rpx 30rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.back-btn {
+	color: #ffffff;
+	font-size: 36rpx;
+}
+
+.page-title {
+	color: #ffffff;
+	font-size: 36rpx;
+	font-weight: bold;
+	flex: 1;
+	text-align: center;
+}
+
+.agreement-content {
+	padding: 30rpx;
+}
+
+.agreement-title {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #333333;
+	text-align: center;
+	margin-bottom: 10rpx;
+}
+
+.agreement-date {
+	font-size: 24rpx;
+	color: #999999;
+	text-align: center;
+	margin-bottom: 40rpx;
+}
+
+.agreement-section {
+	margin-bottom: 30rpx;
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333333;
+	margin-bottom: 20rpx;
+}
+
+.section-content {
+	font-size: 28rpx;
+	color: #666666;
+	line-height: 1.8;
+}
+
+.section-content text {
+	display: block;
+	margin-bottom: 15rpx;
+}
+</style>

@@ -1,41 +1,36 @@
 <template>
 	<view class="container">
-		<!-- 顶部导航栏 -->
-		<view class="header">
-			<text class="header-title">食堂榜</text>
+		<view class="top-header">
+			<view class="back-btn">
+				<text>←</text>
+			</view>
+			<text class="page-title">澳科食堂榜</text>
+			<view class="header-icons">
+				<text class="icon">•••</text>
+				<text class="icon">⦿</text>
+			</view>
 		</view>
 		
-		<!-- 食堂列表 -->
-		<view class="content">
-			<view class="search-box">
-				<input type="text" placeholder="搜索食堂..." v-model="searchText" />
-				<text class="search-icon">🔍</text>
-			</view>
-			
-			<view class="canteen-list">
-				<view class="canteen-item" v-for="(item, index) in filteredCanteens" :key="index" 
-					  @click="navigateToShops(item.id)">
-					<image class="canteen-image" :src="item.image" mode="aspectFill"></image>
-					<view class="canteen-info">
-						<view class="canteen-header">
-							<text class="canteen-name">{{item.name}}</text>
-							<view class="rating">
-								<text class="rating-score">{{item.rating.toFixed(1)}}</text>
-								<view class="stars">
-									<text v-for="n in 5" :key="n" class="star" 
-										  :class="{ 'filled': n <= Math.round(item.rating) }">★</text>
-								</view>
-							</view>
-						</view>
-						<view class="canteen-meta">
-							<text class="location">{{item.location}}</text>
-							<text class="business-hours">{{item.businessHours}}</text>
-						</view>
-						<view class="tags">
-							<text class="tag" v-for="(tag, tagIndex) in item.tags" :key="tagIndex">{{tag}}</text>
-						</view>
-					</view>
+		<view class="search-box">
+			<input type="text" placeholder="搜索食堂..." v-model="searchText" />
+			<text class="search-icon">🔍</text>
+		</view>
+		
+		<view class="header">
+			<text class="title">澳科食堂</text>
+			<text class="subtitle">浏览各食堂的真实评价</text>
+		</view>
+		
+		<view class="canteen-list">
+			<view class="canteen-item" v-for="(item, index) in filteredCanteens" :key="index" @click="navigateToShops(item.id)">
+				<view class="canteen-icon-box" :style="{ backgroundColor: getRandomColor() }">
+					<text>{{item.name.slice(0, 2)}}</text>
 				</view>
+				<view class="canteen-detail">
+					<text class="canteen-name">{{item.name}}</text>
+					<text class="canteen-count">{{item.location}} | {{item.businessHours}}</text>
+				</view>
+				<text class="arrow">></text>
 			</view>
 		</view>
 	</view>
@@ -92,6 +87,10 @@ export default {
 			uni.navigateTo({
 				url: `/pages/canteen/shop-list?canteenId=${canteenId}`
 			});
+		},
+		getRandomColor() {
+			const colors = ['#3498db', '#e74c3c', '#9b59b6', '#f39c12', '#2ecc71'];
+			return colors[Math.floor(Math.random() * colors.length)];
 		}
 	}
 }
@@ -101,128 +100,132 @@ export default {
 .container {
 	min-height: 100vh;
 	background-color: #f5f5f5;
+	padding-bottom: 0;
 }
 
-.header {
+.top-header {
 	background-color: #3498db;
-	padding: 20rpx;
-	text-align: center;
+	padding: 20rpx 30rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
-.header-title {
+.back-btn {
+	color: #ffffff;
+	font-size: 36rpx;
+	padding: 0 20rpx;
+}
+
+.page-title {
 	color: #ffffff;
 	font-size: 36rpx;
 	font-weight: bold;
+	flex: 1;
+	text-align: center;
 }
 
-.content {
-	padding: 20rpx;
+.header-icons {
+	display: flex;
+	gap: 20rpx;
+}
+
+.icon {
+	color: #ffffff;
+	font-size: 32rpx;
 }
 
 .search-box {
 	position: relative;
-	margin-bottom: 20rpx;
+	padding: 15rpx 20rpx;
+	background-color: #3498db;
 }
 
 .search-box input {
 	width: 100%;
-	height: 80rpx;
+	height: 70rpx;
 	background-color: #ffffff;
-	border-radius: 40rpx;
+	border-radius: 35rpx;
 	padding: 0 80rpx 0 30rpx;
 	font-size: 28rpx;
 }
 
 .search-icon {
 	position: absolute;
-	right: 30rpx;
-	top: 50%;
-	transform: translateY(-50%);
+	right: 40rpx;
+	top: 30rpx;
 	font-size: 32rpx;
+	color: #3498db;
+}
+
+.header {
+	padding: 20rpx;
+	background-color: #f5f5f5;
+}
+
+.title {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #333333;
+	display: block;
+	margin-bottom: 5rpx;
+}
+
+.subtitle {
+	font-size: 26rpx;
+	color: #666666;
 }
 
 .canteen-list {
-	display: flex;
-	flex-direction: column;
-	gap: 20rpx;
+	padding: 0 15rpx;
 }
 
 .canteen-item {
-	background-color: #ffffff;
-	border-radius: 16rpx;
-	overflow: hidden;
-	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
-}
-
-.canteen-image {
-	width: 100%;
-	height: 300rpx;
-}
-
-.canteen-info {
-	padding: 20rpx;
-}
-
-.canteen-header {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 10rpx;
+	padding: 25rpx 20rpx;
+	margin-bottom: 15rpx;
+	background-color: #ffffff;
+	border-radius: 8rpx;
+	box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05);
+}
+
+.canteen-icon-box {
+	width: 80rpx;
+	height: 80rpx;
+	border-radius: 40rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 20rpx;
+}
+
+.canteen-icon-box text {
+	color: #ffffff;
+	font-size: 32rpx;
+	font-weight: bold;
+}
+
+.canteen-detail {
+	flex: 1;
 }
 
 .canteen-name {
 	font-size: 32rpx;
 	font-weight: bold;
 	color: #333333;
+	display: block;
+	margin-bottom: 5rpx;
 }
 
-.rating {
-	display: flex;
-	align-items: center;
-	gap: 10rpx;
-}
-
-.rating-score {
-	font-size: 32rpx;
-	color: #f39c12;
-	font-weight: bold;
-}
-
-.stars {
-	display: flex;
-}
-
-.star {
-	color: #dddddd;
-	font-size: 24rpx;
-}
-
-.star.filled {
-	color: #f39c12;
-}
-
-.canteen-meta {
-	display: flex;
-	gap: 20rpx;
-	margin-bottom: 10rpx;
-}
-
-.location, .business-hours {
+.canteen-count {
 	font-size: 24rpx;
 	color: #666666;
 }
 
-.tags {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10rpx;
-}
-
-.tag {
-	font-size: 24rpx;
-	color: #3498db;
-	background-color: #eef7fd;
-	padding: 4rpx 12rpx;
-	border-radius: 6rpx;
+.arrow {
+	color: #999999;
+	font-size: 32rpx;
+	margin-left: 10rpx;
 }
 </style>

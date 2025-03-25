@@ -104,14 +104,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
+  globalData: {
+    userAvatar: '/static/avatar.png'
+  },
   onLaunch: function onLaunch() {
     console.log('App Launch');
-  },
-  onShow: function onShow() {
-    console.log('App Show');
-  },
-  onHide: function onHide() {
-    console.log('App Hide');
   }
 };
 exports.default = _default;

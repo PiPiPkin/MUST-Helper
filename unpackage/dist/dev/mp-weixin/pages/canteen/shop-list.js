@@ -105,13 +105,11 @@ var render = function () {
   var l0 = _vm.__map(_vm.filteredShops, function (item, index) {
     var $orig = _vm.__get_orig(item)
     var g0 = item.rating.toFixed(1)
-    var m0 = _vm.getShopLocation(item.id)
-    var m1 = _vm.getShopHours(item.id)
+    var g1 = Math.floor(item.rating)
     return {
       $orig: $orig,
       g0: g0,
-      m0: m0,
-      m1: m1,
+      g1: g1,
     }
   })
   _vm.$mp.data = Object.assign(
@@ -204,6 +202,7 @@ var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/r
 var _default = {
   data: function data() {
     return {
+      statusBarHeight: 20,
       canteenId: 0,
       searchText: '',
       canteen: {
@@ -213,19 +212,17 @@ var _default = {
         // 厨艺天地的店铺
         1: [{
           id: 101,
-          name: '南洋八打',
+          name: '南洋巴打',
           image: '/static/shops/nanyang.jpg',
           rating: 4.6,
           averagePrice: 28,
-          monthlySales: 1200,
-          tags: ['东南亚', '咖喱', '海南鸡饭']
+          tags: ['铁板', '咖喱', '海南鸡饭']
         }, {
           id: 102,
           name: '隆江猪脚饭',
           image: '/static/shops/longjiang.jpg',
           rating: 4.7,
           averagePrice: 32,
-          monthlySales: 1500,
           tags: ['粤式', '猪脚', '烧腊']
         }, {
           id: 103,
@@ -233,7 +230,6 @@ var _default = {
           image: '/static/shops/xiaoliangkou.jpg',
           rating: 4.4,
           averagePrice: 25,
-          monthlySales: 980,
           tags: ['川菜', '湘菜', '小炒']
         }, {
           id: 104,
@@ -241,7 +237,6 @@ var _default = {
           image: '/static/shops/miandianwang.jpg',
           rating: 4.5,
           averagePrice: 18,
-          monthlySales: 1300,
           tags: ['面食', '早餐', '小吃']
         }, {
           id: 105,
@@ -249,7 +244,6 @@ var _default = {
           image: '/static/shops/yueshi.jpg',
           rating: 4.8,
           averagePrice: 35,
-          monthlySales: 1800,
           tags: ['烧腊', '粤式', '快餐']
         }],
         // 麦当劳的店铺
@@ -259,7 +253,6 @@ var _default = {
           image: '/static/shops/mcd_main.jpg',
           rating: 4.2,
           averagePrice: 30,
-          monthlySales: 2500,
           tags: ['汉堡', '炸鸡', '快餐']
         }],
         // OK便利店
@@ -269,7 +262,6 @@ var _default = {
           image: '/static/shops/ok_store.jpg',
           rating: 4.0,
           averagePrice: 15,
-          monthlySales: 3000,
           tags: ['零食', '饮料', '便当']
         }],
         // 点绽
@@ -279,7 +271,6 @@ var _default = {
           image: '/static/shops/dianzhan_dessert.jpg',
           rating: 4.5,
           averagePrice: 22,
-          monthlySales: 1200,
           tags: ['甜品', '奶茶', '冰淇淋']
         }, {
           id: 402,
@@ -287,7 +278,6 @@ var _default = {
           image: '/static/shops/dianzhan_snack.jpg',
           rating: 4.3,
           averagePrice: 18,
-          monthlySales: 900,
           tags: ['小吃', '粤式', '点心']
         }],
         // 点聚
@@ -297,7 +287,6 @@ var _default = {
           image: '/static/shops/dianju_restaurant.jpg',
           rating: 4.4,
           averagePrice: 35,
-          monthlySales: 1100,
           tags: ['港式', '茶餐厅', '早茶']
         }, {
           id: 502,
@@ -305,7 +294,6 @@ var _default = {
           image: '/static/shops/dianju_roast.jpg',
           rating: 4.6,
           averagePrice: 40,
-          monthlySales: 1300,
           tags: ['烧腊', '粤式', '快餐']
         }],
         // 季节
@@ -315,7 +303,6 @@ var _default = {
           image: '/static/shops/season_fast.jpg',
           rating: 4.1,
           averagePrice: 25,
-          monthlySales: 950,
           tags: ['中餐', '快餐', '套餐']
         }, {
           id: 602,
@@ -323,7 +310,6 @@ var _default = {
           image: '/static/shops/season_noodle.jpg',
           rating: 4.2,
           averagePrice: 22,
-          monthlySales: 850,
           tags: ['面食', '小吃', '快餐']
         }],
         // 其他店
@@ -333,7 +319,6 @@ var _default = {
           image: '/static/shops/coffee_corner.jpg',
           rating: 4.3,
           averagePrice: 20,
-          monthlySales: 600,
           tags: ['咖啡', '甜点', '轻食']
         }, {
           id: 702,
@@ -341,7 +326,6 @@ var _default = {
           image: '/static/shops/fruit_bar.jpg',
           rating: 4.4,
           averagePrice: 15,
-          monthlySales: 700,
           tags: ['水果', '果汁', '健康']
         }]
       },
@@ -360,6 +344,23 @@ var _default = {
     }
   },
   onLoad: function onLoad(options) {
+    var _this = this;
+    // 获取状态栏高度
+    try {
+      uni.getSystemInfo({
+        success: function success(res) {
+          _this.statusBarHeight = res.statusBarHeight;
+          console.log('获取系统信息成功:', res);
+        },
+        fail: function fail(err) {
+          console.error('获取系统信息失败:', err);
+          _this.statusBarHeight = 20;
+        }
+      });
+    } catch (error) {
+      console.error('获取系统信息异常:', error);
+      this.statusBarHeight = 20;
+    }
     if (options.canteenId) {
       this.canteenId = parseInt(options.canteenId);
       // 添加错误处理
@@ -378,15 +379,18 @@ var _default = {
   methods: {
     // 添加数据加载方法
     loadCanteenData: function loadCanteenData() {
-      var _this = this;
+      var _this2 = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
         var canteensData;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                // 模拟数据加载
-                console.log('加载食堂ID:', _this.canteenId);
+                _context.prev = 0;
+                uni.showLoading({
+                  title: '加载中...'
+                });
+                console.log('加载食堂ID:', _this2.canteenId);
 
                 // 模拟食堂数据
                 canteensData = {
@@ -418,25 +422,40 @@ var _default = {
                     id: 7,
                     name: '其他店'
                   }
-                }; // 模拟网络请求延迟
-                setTimeout(function () {
-                  // 设置食堂信息
-                  _this.canteen = canteensData[_this.canteenId] || {
-                    id: _this.canteenId,
-                    name: '未知食堂'
-                  };
+                }; // 使用Promise包装异步操作
+                _context.next = 6;
+                return new Promise(function (resolve) {
+                  return setTimeout(resolve, 500);
+                });
+              case 6:
+                // 设置食堂信息
+                _this2.canteen = canteensData[_this2.canteenId] || {
+                  id: _this2.canteenId,
+                  name: '未知食堂'
+                };
 
-                  // 设置该食堂下的店铺
-                  _this.shops = _this.allShops[_this.canteenId] || [];
-                  console.log('食堂数据加载完成:', _this.canteen);
-                  console.log('店铺数据加载完成:', _this.shops);
-                }, 500);
-              case 3:
+                // 设置该食堂下的店铺
+                _this2.shops = _this2.allShops[_this2.canteenId] || [];
+                console.log('食堂数据加载完成:', _this2.canteen);
+                console.log('店铺数据加载完成:', _this2.shops);
+                uni.hideLoading();
+                _context.next = 18;
+                break;
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](0);
+                console.error('加载数据失败:', _context.t0);
+                uni.hideLoading();
+                uni.showToast({
+                  title: '加载失败，请重试',
+                  icon: 'none'
+                });
+              case 18:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 13]]);
       }))();
     },
     goBack: function goBack() {

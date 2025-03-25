@@ -109,6 +109,42 @@
                 "navigationStyle": "custom"
             }
         }
+
+      ,  {
+            "path": "pages/user/edit-profile",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "编辑个人资料"
+            }
+        },
+        {
+            "path": "pages/user/my-reviews",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "我的评价"
+            }
+        },
+        {
+            "path": "pages/user/about",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "关于我们"
+            }
+        },
+        {
+            "path": "pages/user/agreement",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "用户协议"
+            }
+        },
+        {
+            "path": "pages/user/privacy",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTitleText": "隐私政策"
+            }
+        }
     ],
     "globalStyle": {
         "navigationBarTextStyle": "black",

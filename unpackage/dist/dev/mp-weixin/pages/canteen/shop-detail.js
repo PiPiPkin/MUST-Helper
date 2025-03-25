@@ -104,27 +104,22 @@ var render = function () {
   var _c = _vm._self._c || _h
   var g0 = _vm.shop.rating ? _vm.shop.rating.toFixed(1) : null
   var g1 = Math.round(_vm.shop.rating || 0)
-  var g2 = _vm.shop.rating ? _vm.shop.rating.toFixed(1) : null
-  var g3 = Math.round(_vm.shop.rating || 0)
-  var g4 = Math.round(_vm.shop.tasteRating || 0)
-  var g5 = _vm.shop.tasteRating ? _vm.shop.tasteRating.toFixed(1) : null
-  var g6 = Math.round(_vm.shop.priceRating || 0)
-  var g7 = _vm.shop.priceRating ? _vm.shop.priceRating.toFixed(1) : null
-  var g8 = Math.round(_vm.shop.hygieneRating || 0)
-  var g9 = _vm.shop.hygieneRating ? _vm.shop.hygieneRating.toFixed(1) : null
-  var g10 = _vm.shop.dishes && _vm.shop.dishes.length > 0
-  var g11 = _vm.comments.length
-  var g12 = _vm.comments.length
+  var g2 = Math.round(_vm.shop.tasteRating || 0)
+  var g3 = _vm.shop.tasteRating ? _vm.shop.tasteRating.toFixed(1) : null
+  var g4 = Math.round(_vm.shop.priceRating || 0)
+  var g5 = _vm.shop.priceRating ? _vm.shop.priceRating.toFixed(1) : null
+  var g6 = Math.round(_vm.shop.hygieneRating || 0)
+  var g7 = _vm.shop.hygieneRating ? _vm.shop.hygieneRating.toFixed(1) : null
+  var g8 = _vm.comments.length
+  var g9 = _vm.comments.length
   var l0 = _vm.__map(_vm.comments, function (item, index) {
     var $orig = _vm.__get_orig(item)
-    var g13 = Math.round(item.rating)
-    var g14 = item.rating.toFixed(1)
-    var g15 = item.images && item.images.length > 0
+    var g10 = Math.round(item.rating)
+    var g11 = item.rating.toFixed(1)
     return {
       $orig: $orig,
-      g13: g13,
-      g14: g14,
-      g15: g15,
+      g10: g10,
+      g11: g11,
     }
   })
   if (!_vm._isMounted) {
@@ -164,9 +159,6 @@ var render = function () {
         g7: g7,
         g8: g8,
         g9: g9,
-        g10: g10,
-        g11: g11,
-        g12: g12,
         l0: l0,
       },
     }
@@ -206,10 +198,465 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 115));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 117));
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -496,6 +943,7 @@ var _default = {
       newComment: '',
       isCommentExpanded: false,
       isLiking: false,
+      isLoading: true,
       userRating: {
         taste: 0,
         price: 0,
@@ -509,7 +957,10 @@ var _default = {
         priceRating: 0,
         hygieneRating: 0,
         reviewCount: 0,
-        dishes: []
+        dishes: [],
+        tags: [],
+        averagePrice: 0,
+        monthlySales: 0
       },
       comments: []
     };
@@ -578,26 +1029,52 @@ var _default = {
       };
     },
     submitRating: function submitRating() {
-      if (!this.userRating.taste || !this.userRating.price || !this.userRating.hygiene) {
+      // 确保至少有一项评分不为0
+      if (this.userRating.taste === 0 && this.userRating.price === 0 && this.userRating.hygiene === 0) {
         uni.showToast({
-          title: '请完成所有评分项',
+          title: '请至少评分一项',
           icon: 'none'
         });
         return;
       }
 
-      // 计算平均评分
-      var avgRating = (this.userRating.taste + this.userRating.price + this.userRating.hygiene) / 3;
+      // 计算平均分时，只计算非0项
+      var totalScore = 0;
+      var validItems = 0;
+      if (this.userRating.taste > 0) {
+        totalScore += this.userRating.taste;
+        validItems++;
+      }
+      if (this.userRating.price > 0) {
+        totalScore += this.userRating.price;
+        validItems++;
+      }
+      if (this.userRating.hygiene > 0) {
+        totalScore += this.userRating.hygiene;
+        validItems++;
+      }
 
-      // TODO: 发送评分到服务器
-      console.log('提交评分:', this.userRating);
+      // 计算平均分 - 即使所有项都是1星也能正常计算
+      var avgRating = validItems > 0 ? Number((totalScore / validItems).toFixed(1)) : 0;
+      console.log('提交评分:', this.userRating, '平均分:', avgRating);
 
-      // 更新本地显示
-      this.shop.tasteRating = (this.shop.tasteRating * this.shop.reviewCount + this.userRating.taste) / (this.shop.reviewCount + 1);
-      this.shop.priceRating = (this.shop.priceRating * this.shop.reviewCount + this.userRating.price) / (this.shop.reviewCount + 1);
-      this.shop.hygieneRating = (this.shop.hygieneRating * this.shop.reviewCount + this.userRating.hygiene) / (this.shop.reviewCount + 1);
-      this.shop.rating = (this.shop.rating * this.shop.reviewCount + avgRating) / (this.shop.reviewCount + 1);
-      this.shop.reviewCount++;
+      // 使用精确计算更新评分
+      var newCount = this.shop.reviewCount + 1;
+
+      // 更新各项评分 - 确保1星评分也能正常更新
+      if (this.userRating.taste > 0) {
+        this.shop.tasteRating = Number(((this.shop.tasteRating * this.shop.reviewCount + this.userRating.taste) / newCount).toFixed(1));
+      }
+      if (this.userRating.price > 0) {
+        this.shop.priceRating = Number(((this.shop.priceRating * this.shop.reviewCount + this.userRating.price) / newCount).toFixed(1));
+      }
+      if (this.userRating.hygiene > 0) {
+        this.shop.hygieneRating = Number(((this.shop.hygieneRating * this.shop.reviewCount + this.userRating.hygiene) / newCount).toFixed(1));
+      }
+
+      // 更新总评分
+      this.shop.rating = Number(((this.shop.rating * this.shop.reviewCount + avgRating) / newCount).toFixed(1));
+      this.shop.reviewCount = newCount;
       uni.showToast({
         title: '评分成功',
         icon: 'success'
@@ -606,123 +1083,155 @@ var _default = {
     },
     getShopDetail: function getShopDetail() {
       var _this2 = this;
-      console.log('获取店铺ID:', this.shopId);
+      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+        var shopsData, shopDetail, commentsData;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                console.log('获取店铺ID:', _this2.shopId);
+                _this2.isLoading = true;
 
-      // 模拟店铺数据
-      var shopsData = {
-        101: {
-          id: 101,
-          name: '南洋八打',
-          image: '/static/shops/nanyang.jpg',
-          rating: 4.6,
-          tasteRating: 4.7,
-          priceRating: 4.3,
-          // 修改：environmentRating -> priceRating
-          hygieneRating: 4.5,
-          // 修改：serviceRating -> hygieneRating
-          reviewCount: 86,
-          averagePrice: 28,
-          monthlySales: 1200,
-          tags: ['东南亚', '咖喱', '海南鸡饭'],
-          dishes: [{
-            id: 1,
-            name: '海南鸡饭',
-            price: 25,
-            image: '/static/dishes/hainanchicken.jpg'
-          }, {
-            id: 2,
-            name: '咖喱鸡',
-            price: 28,
-            image: '/static/dishes/currychicken.jpg'
-          }, {
-            id: 3,
-            name: '椰浆饭',
-            price: 22,
-            image: '/static/dishes/coconutrice.jpg'
-          }]
-        },
-        102: {
-          id: 102,
-          name: '隆江猪脚饭',
-          image: '/static/shops/longjiang.jpg',
-          rating: 4.7,
-          tasteRating: 4.8,
-          priceRating: 4.5,
-          // 修改：environmentRating -> priceRating
-          hygieneRating: 4.6,
-          // 修改：serviceRating -> hygieneRating
-          reviewCount: 124,
-          averagePrice: 32,
-          monthlySales: 1500,
-          tags: ['粤式', '猪脚', '烧腊'],
-          dishes: [{
-            id: 1,
-            name: '招牌猪脚饭',
-            price: 32,
-            image: '/static/dishes/pigfoot.jpg'
-          }, {
-            id: 2,
-            name: '叉烧饭',
-            price: 30,
-            image: '/static/dishes/charsiu.jpg'
-          }, {
-            id: 3,
-            name: '烧鸭饭',
-            price: 30,
-            image: '/static/dishes/roastduck.jpg'
-          }]
-        }
-      };
-      // 获取店铺详情数据
-      var shopDetail = shopsData[this.shopId];
-      if (shopDetail) {
-        this.shop = shopDetail;
+                // 模拟店铺数据
+                shopsData = {
+                  101: {
+                    id: 101,
+                    name: '南洋八打',
+                    image: '/static/shops/nanyang.jpg',
+                    rating: 4.6,
+                    tasteRating: 4.7,
+                    priceRating: 4.3,
+                    // 修改：environmentRating -> priceRating
+                    hygieneRating: 4.5,
+                    // 修改：serviceRating -> hygieneRating
+                    reviewCount: 86,
+                    averagePrice: 28,
+                    monthlySales: 1200,
+                    tags: ['东南亚', '咖喱', '海南鸡饭'],
+                    dishes: [{
+                      id: 1,
+                      name: '海南鸡饭',
+                      price: 25,
+                      image: '/static/dishes/hainanchicken.jpg'
+                    }, {
+                      id: 2,
+                      name: '咖喱鸡',
+                      price: 28,
+                      image: '/static/dishes/currychicken.jpg'
+                    }, {
+                      id: 3,
+                      name: '椰浆饭',
+                      price: 22,
+                      image: '/static/dishes/coconutrice.jpg'
+                    }]
+                  },
+                  102: {
+                    id: 102,
+                    name: '隆江猪脚饭',
+                    image: '/static/shops/longjiang.jpg',
+                    rating: 4.7,
+                    tasteRating: 4.8,
+                    priceRating: 4.5,
+                    // 修改：environmentRating -> priceRating
+                    hygieneRating: 4.6,
+                    // 修改：serviceRating -> hygieneRating
+                    reviewCount: 124,
+                    averagePrice: 32,
+                    monthlySales: 1500,
+                    tags: ['粤式', '猪脚', '烧腊'],
+                    dishes: [{
+                      id: 1,
+                      name: '招牌猪脚饭',
+                      price: 32,
+                      image: '/static/dishes/pigfoot.jpg'
+                    }, {
+                      id: 2,
+                      name: '叉烧饭',
+                      price: 30,
+                      image: '/static/dishes/charsiu.jpg'
+                    }, {
+                      id: 3,
+                      name: '烧鸭饭',
+                      price: 30,
+                      image: '/static/dishes/roastduck.jpg'
+                    }]
+                  }
+                }; // 模拟网络延迟
+                _context.next = 6;
+                return new Promise(function (resolve) {
+                  return setTimeout(resolve, 500);
+                });
+              case 6:
+                // 获取店铺详情数据
+                shopDetail = shopsData[_this2.shopId];
+                if (!shopDetail) {
+                  _context.next = 15;
+                  break;
+                }
+                _this2.shop = _objectSpread({}, shopDetail);
+                _this2.isLoading = false;
 
-        // 模拟评论数据
-        var commentsData = {
-          101: [{
-            id: 1,
-            userName: '美食达人',
-            userAvatar: '/static/images/avatars/user1.jpg',
-            rating: 4.5,
-            content: '海南鸡饭非常正宗，鸡肉嫩滑多汁，配上特制的酱料简直绝配！店内环境也很干净，服务态度好。',
-            time: '2023-05-15',
-            likeCount: 12,
-            isLiked: false
-          }, {
-            id: 2,
-            userName: '小吃货',
-            userAvatar: '/static/images/avatars/user2.jpg',
-            rating: 5.0,
-            content: '咖喱鸡超级好吃，香料味道浓郁但不辣，很适合不能吃辣的人。价格也很实惠，一个人吃刚刚好。',
-            time: '2023-05-10',
-            likeCount: 8,
-            isLiked: false
-          }],
-          102: [{
-            id: 1,
-            userName: '肉食主义',
-            userAvatar: '/static/images/avatars/user3.jpg',
-            rating: 4.8,
-            content: '猪脚饭真的太香了！猪脚软烂入味，配上卤汁拌饭简直绝了。每次来都必点，强烈推荐！',
-            time: '2023-05-18',
-            likeCount: 15,
-            isLiked: false
-          }]
-        };
-
-        // 设置评论数据
-        this.comments = commentsData[this.shopId] || [];
-        console.log('评论数据加载完成:', this.comments);
-      } else {
-        uni.showToast({
-          title: '店铺不存在',
-          icon: 'none'
-        });
-        setTimeout(function () {
-          _this2.goBack();
-        }, 1500);
-      }
+                // 模拟评论数据
+                commentsData = {
+                  101: [{
+                    id: 1,
+                    userName: '美食达人',
+                    userAvatar: '/static/images/avatars/user1.jpg',
+                    rating: 4.5,
+                    content: '海南鸡饭非常正宗，鸡肉嫩滑多汁，配上特制的酱料简直绝配！店内环境也很干净，服务态度好。',
+                    time: '2023-05-15',
+                    likeCount: 12,
+                    isLiked: false
+                  }, {
+                    id: 2,
+                    userName: '小吃货',
+                    userAvatar: '/static/images/avatars/user2.jpg',
+                    rating: 5.0,
+                    content: '咖喱鸡超级好吃，香料味道浓郁但不辣，很适合不能吃辣的人。价格也很实惠，一个人吃刚刚好。',
+                    time: '2023-05-10',
+                    likeCount: 8,
+                    isLiked: false
+                  }],
+                  102: [{
+                    id: 1,
+                    userName: '肉食主义',
+                    userAvatar: '/static/images/avatars/user3.jpg',
+                    rating: 4.8,
+                    content: '猪脚饭真的太香了！猪脚软烂入味，配上卤汁拌饭简直绝了。每次来都必点，强烈推荐！',
+                    time: '2023-05-18',
+                    likeCount: 15,
+                    isLiked: false
+                  }]
+                }; // 设置评论数据
+                _this2.comments = commentsData[_this2.shopId] || [];
+                console.log('评论数据加载完成:', _this2.comments);
+                _context.next = 16;
+                break;
+              case 15:
+                throw new Error('店铺不存在');
+              case 16:
+                _context.next = 24;
+                break;
+              case 18:
+                _context.prev = 18;
+                _context.t0 = _context["catch"](0);
+                console.error('获取店铺详情失败:', _context.t0);
+                _this2.isLoading = false;
+                uni.showToast({
+                  title: _context.t0.message || '获取店铺信息失败',
+                  icon: 'none'
+                });
+                setTimeout(function () {
+                  _this2.goBack();
+                }, 1500);
+              case 24:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 18]]);
+      }))();
     },
     // 添加其他必要的方法
     expandCommentInput: function expandCommentInput() {

@@ -1,30 +1,30 @@
 <template>
 	<view class="container">
 		<!-- 顶部导航栏 -->
-		<view class="header">
+		<view class="header" :style="{ paddingTop: statusBarHeight + 'px' }">
 			<view class="back-btn" @click="goBack">
 				<text>←</text>
 			</view>
 			<text class="header-title">{{canteen.name || '店铺列表'}}</text>
 		</view>
 		
+		<!-- 搜索框 -->
+		<view class="search-box">
+			<input type="text" placeholder="搜索店铺..." v-model="searchText" />
+			<text class="search-icon">🔍</text>
+		</view>
+		
 		<!-- 店铺列表 -->
-		<view class="content">
-			<view class="search-box">
-				<input type="text" placeholder="搜索店铺..." v-model="searchText" />
-				<text class="search-icon">🔍</text>
-			</view>
-			
-			<view class="shop-list">
-				<view class="shop-item" v-for="(item, index) in filteredShops" :key="index" 
-					  @click="navigateToShopDetail(item.id)">
-					<view class="shop-header">
-						<text class="shop-name">{{item.name}}</text>
-						<text class="rating-score">{{item.rating.toFixed(1)}} <text class="stars">★★★★★</text></text>
-					</view>
-					<view class="shop-location">
-						<text>{{getShopLocation(item.id)}}</text>
-						<text class="shop-hours">{{getShopHours(item.id)}}</text>
+		<view class="shop-list">
+			<view class="shop-item" v-for="(item, index) in filteredShops" :key="index" 
+				  @click="navigateToShopDetail(item.id)">
+				<view class="shop-info">
+					<text class="shop-name">{{item.name}}</text>
+					<view class="shop-rating">
+						<text class="rating-value">{{item.rating.toFixed(1)}}</text>
+						<view class="rating-stars">
+							<text v-for="n in 5" :key="n" :class="['star', n <= Math.floor(item.rating) ? 'active' : '']">★</text>
+						</view>
 					</view>
 					<view class="tags">
 						<text class="tag" v-for="(tag, tagIndex) in item.tags" :key="tagIndex">{{tag}}</text>
@@ -39,6 +39,7 @@
 export default {
 	data() {
 		return {
+			statusBarHeight: 20,
 			canteenId: 0,
 			searchText: '',
 			canteen: {
@@ -49,12 +50,12 @@ export default {
 				1: [
 					{
 						id: 101,
-						name: '南洋八打',
+						name: '南洋巴打',
 						image: '/static/shops/nanyang.jpg',
 						rating: 4.6,
 						averagePrice: 28,
-						monthlySales: 1200,
-						tags: ['东南亚', '咖喱', '海南鸡饭']
+						
+						tags: ['铁板', '咖喱', '海南鸡饭']
 					},
 					{
 						id: 102,
@@ -62,7 +63,7 @@ export default {
 						image: '/static/shops/longjiang.jpg',
 						rating: 4.7,
 						averagePrice: 32,
-						monthlySales: 1500,
+						
 						tags: ['粤式', '猪脚', '烧腊']
 					},
 					{
@@ -71,7 +72,7 @@ export default {
 						image: '/static/shops/xiaoliangkou.jpg',
 						rating: 4.4,
 						averagePrice: 25,
-						monthlySales: 980,
+						
 						tags: ['川菜', '湘菜', '小炒']
 					},
 					{
@@ -80,7 +81,7 @@ export default {
 						image: '/static/shops/miandianwang.jpg',
 						rating: 4.5,
 						averagePrice: 18,
-						monthlySales: 1300,
+						
 						tags: ['面食', '早餐', '小吃']
 					},
 					{
@@ -89,7 +90,7 @@ export default {
 						image: '/static/shops/yueshi.jpg',
 						rating: 4.8,
 						averagePrice: 35,
-						monthlySales: 1800,
+						
 						tags: ['烧腊', '粤式', '快餐']
 					}
 				],
@@ -101,7 +102,7 @@ export default {
 						image: '/static/shops/mcd_main.jpg',
 						rating: 4.2,
 						averagePrice: 30,
-						monthlySales: 2500,
+						
 						tags: ['汉堡', '炸鸡', '快餐']
 					}
 				],
@@ -113,7 +114,7 @@ export default {
 						image: '/static/shops/ok_store.jpg',
 						rating: 4.0,
 						averagePrice: 15,
-						monthlySales: 3000,
+						
 						tags: ['零食', '饮料', '便当']
 					}
 				],
@@ -125,7 +126,7 @@ export default {
 						image: '/static/shops/dianzhan_dessert.jpg',
 						rating: 4.5,
 						averagePrice: 22,
-						monthlySales: 1200,
+						
 						tags: ['甜品', '奶茶', '冰淇淋']
 					},
 					{
@@ -134,7 +135,7 @@ export default {
 						image: '/static/shops/dianzhan_snack.jpg',
 						rating: 4.3,
 						averagePrice: 18,
-						monthlySales: 900,
+						
 						tags: ['小吃', '粤式', '点心']
 					}
 				],
@@ -146,7 +147,7 @@ export default {
 						image: '/static/shops/dianju_restaurant.jpg',
 						rating: 4.4,
 						averagePrice: 35,
-						monthlySales: 1100,
+						
 						tags: ['港式', '茶餐厅', '早茶']
 					},
 					{
@@ -155,7 +156,7 @@ export default {
 						image: '/static/shops/dianju_roast.jpg',
 						rating: 4.6,
 						averagePrice: 40,
-						monthlySales: 1300,
+						
 						tags: ['烧腊', '粤式', '快餐']
 					}
 				],
@@ -167,7 +168,7 @@ export default {
 						image: '/static/shops/season_fast.jpg',
 						rating: 4.1,
 						averagePrice: 25,
-						monthlySales: 950,
+						
 						tags: ['中餐', '快餐', '套餐']
 					},
 					{
@@ -176,7 +177,7 @@ export default {
 						image: '/static/shops/season_noodle.jpg',
 						rating: 4.2,
 						averagePrice: 22,
-						monthlySales: 850,
+					
 						tags: ['面食', '小吃', '快餐']
 					}
 				],
@@ -188,7 +189,7 @@ export default {
 						image: '/static/shops/coffee_corner.jpg',
 						rating: 4.3,
 						averagePrice: 20,
-						monthlySales: 600,
+						
 						tags: ['咖啡', '甜点', '轻食']
 					},
 					{
@@ -197,7 +198,7 @@ export default {
 						image: '/static/shops/fruit_bar.jpg',
 						rating: 4.4,
 						averagePrice: 15,
-						monthlySales: 700,
+						
 						tags: ['水果', '果汁', '健康']
 					}
 				]
@@ -216,6 +217,23 @@ export default {
 		}
 	},
 	onLoad(options) {
+		// 获取状态栏高度
+		try {
+			uni.getSystemInfo({
+				success: (res) => {
+					this.statusBarHeight = res.statusBarHeight;
+					console.log('获取系统信息成功:', res);
+				},
+				fail: (err) => {
+					console.error('获取系统信息失败:', err);
+					this.statusBarHeight = 20;
+				}
+			});
+		} catch (error) {
+			console.error('获取系统信息异常:', error);
+			this.statusBarHeight = 20;
+		}
+
 		if (options.canteenId) {
 			this.canteenId = parseInt(options.canteenId);
 			// 添加错误处理
@@ -234,22 +252,27 @@ export default {
 	methods: {
 		// 添加数据加载方法
 		async loadCanteenData() {
-			// 模拟数据加载
-			console.log('加载食堂ID:', this.canteenId);
-			
-			// 模拟食堂数据
-			const canteensData = {
-				1: { id: 1, name: '厨艺天地' },
-				2: { id: 2, name: '麦当劳' },
-				3: { id: 3, name: 'OK便利店' },
-				4: { id: 4, name: '点绽' },
-				5: { id: 5, name: '点聚' },
-				6: { id: 6, name: '季节' },
-				7: { id: 7, name: '其他店' }
-			};
-			
-			// 模拟网络请求延迟
-			setTimeout(() => {
+			try {
+				uni.showLoading({
+					title: '加载中...'
+				});
+
+				console.log('加载食堂ID:', this.canteenId);
+				
+				// 模拟食堂数据
+				const canteensData = {
+					1: { id: 1, name: '厨艺天地' },
+					2: { id: 2, name: '麦当劳' },
+					3: { id: 3, name: 'OK便利店' },
+					4: { id: 4, name: '点绽' },
+					5: { id: 5, name: '点聚' },
+					6: { id: 6, name: '季节' },
+					7: { id: 7, name: '其他店' }
+				};
+				
+				// 使用Promise包装异步操作
+				await new Promise(resolve => setTimeout(resolve, 500));
+
 				// 设置食堂信息
 				this.canteen = canteensData[this.canteenId] || { id: this.canteenId, name: '未知食堂' };
 				
@@ -258,7 +281,16 @@ export default {
 				
 				console.log('食堂数据加载完成:', this.canteen);
 				console.log('店铺数据加载完成:', this.shops);
-			}, 500);
+
+				uni.hideLoading();
+			} catch (error) {
+				console.error('加载数据失败:', error);
+				uni.hideLoading();
+				uni.showToast({
+					title: '加载失败，请重试',
+					icon: 'none'
+				});
+			}
 		},
 		
 		goBack() {
@@ -308,9 +340,14 @@ export default {
 
 .header {
 	background-color: #3498db;
-	padding: 20rpx;
+	padding: 20rpx 30rpx;
 	display: flex;
 	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
 }
 
 .back-btn {
@@ -327,98 +364,109 @@ export default {
 	text-align: center;
 }
 
-.content {
-	padding: 20rpx;
-}
-
 .search-box {
-	position: relative;
-	margin-bottom: 20rpx;
+	position: fixed;
+	top: calc(var(--status-bar-height) + 80rpx);
+	left: 0;
+	right: 0;
+	padding: 20rpx;
+	background-color: #3498db;
+	z-index: 99;
 }
 
 .search-box input {
 	width: 100%;
-	height: 80rpx;
+	height: 70rpx;
 	background-color: #ffffff;
-	border-radius: 40rpx;
+	border-radius: 35rpx;
 	padding: 0 80rpx 0 30rpx;
 	font-size: 28rpx;
 }
 
 .search-icon {
 	position: absolute;
-	right: 30rpx;
+	right: 40rpx;
 	top: 50%;
 	transform: translateY(-50%);
 	font-size: 32rpx;
+	color: #999;
 }
 
 .shop-list {
-	display: flex;
-	flex-direction: column;
-	gap: 10rpx; /* 减少卡片之间的间距 */
+	padding: calc(var(--status-bar-height) + 180rpx) 20rpx 20rpx;
 }
 
 .shop-item {
 	background-color: #ffffff;
-	border-radius: 8rpx; /* 减小圆角 */
-	overflow: hidden;
-	box-shadow: 0 1rpx 4rpx rgba(0, 0, 0, 0.05); /* 减小阴影 */
-	padding: 12rpx 16rpx; /* 减少内边距 */
-	border-left: 4rpx solid #f39c12; /* 减小左边框宽度 */
+	border-radius: 12rpx;
+	margin-bottom: 20rpx;
+	padding: 20rpx;
+	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
-.shop-header {
+.shop-info {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 6rpx; /* 减少底部间距 */
+	flex-direction: column;
+	gap: 10rpx;
 }
 
 .shop-name {
-	font-size: 32rpx; /* 稍微减小字体 */
+	font-size: 32rpx;
 	font-weight: bold;
 	color: #333333;
 }
 
-.rating-score {
-	font-size: 28rpx; /* 减小字体 */
+.shop-rating {
+	display: flex;
+	align-items: center;
+	gap: 10rpx;
+}
+
+.rating-value {
+	font-size: 28rpx;
 	color: #f39c12;
 	font-weight: bold;
 }
 
-.stars {
-	color: #f39c12;
-	font-size: 24rpx; /* 减小星星字体 */
+.rating-stars {
+	display: flex;
+	gap: 4rpx;
 }
 
-.shop-location {
+.star {
+	color: #ddd;
+	font-size: 24rpx;
+}
+
+.star.active {
+	color: #f39c12;
+}
+
+.review-count {
+	font-size: 24rpx;
+	color: #666;
+}
+
+.tags {
 	display: flex;
-	justify-content: space-between;
-	margin-bottom: 6rpx; /* 减少底部间距 */
-	font-size: 24rpx; /* 减小字体 */
-	color: #666666;
+	flex-wrap: wrap;
+	gap: 10rpx;
+	margin-top: 10rpx;
+}
+
+.tag {
+	padding: 2rpx 10rpx;
+	background-color: #eef7fd;
+	border-radius: 4rpx;
+	font-size: 22rpx;
+	color: #3498db;
 }
 
 .shop-hours {
 	color: #888888;
 }
 
-.tags {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 6rpx; /* 减少标签间距 */
-}
-
-.tag {
-	font-size: 22rpx; /* 减小标签字体 */
-	color: #3498db;
-	background-color: #eef7fd;
-	padding: 2rpx 10rpx; /* 减少标签内边距 */
-	border-radius: 4rpx;
-}
-
 .content {
-	padding: 15rpx; /* 减少内容区域的内边距 */
+	padding: 15rpx;
 }
 </style>

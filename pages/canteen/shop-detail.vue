@@ -1,5 +1,9 @@
 <template>
 	<view class="container">
+		<view class="loading-overlay" v-if="isLoading">
+			<view class="loading-spinner"></view>
+			<text class="loading-text">加载中...</text>
+		</view>
 		<!-- 顶部导航栏 -->
 		<view class="header">
 			<view class="back-btn" @click="goBack">
@@ -10,27 +14,15 @@
 		
 		<!-- 店铺信息 -->
 		<view class="shop-info">
-			<image class="shop-banner" :src="shop.image" mode="aspectFill"></image>
 			<view class="shop-header">
 				<text class="shop-name">{{shop.name || '加载中...'}}</text>
-				<view class="shop-meta">
-					<view class="rating">
-						<text class="rating-value">{{shop.rating ? shop.rating.toFixed(1) : '0.0'}}</text>
-						<view class="stars">
-							<text v-for="n in 5" :key="n" class="star" 
-								  :class="{ 'filled': n <= Math.round(shop.rating || 0) }">★</text>
-						</view>
-					</view>
-					<text class="review-count">{{shop.reviewCount || 0}}人评价</text>
-				</view>
 				<view class="shop-tags">
 					<text class="tag" v-for="(tag, index) in shop.tags" :key="index">{{tag}}</text>
 				</view>
-				<view class="shop-details">
-					<text class="price">人均 ¥{{shop.averagePrice}}</text>
-					<text class="monthly-sales">月售{{shop.monthlySales}}单</text>
-				</view>
 			</view>
+			<text class="shop-code" v-if="shop.code">{{shop.code}}</text>
+			<text class="shop-code" v-if="shop.code">{{shop.code}}</text>
+			<text class="shop-description">{{shop.description || '暂无描述'}}</text>
 		</view>
 		
 		<!-- 评分区 -->
@@ -46,7 +38,7 @@
 			
 			<view class="rating-details">
 				<view class="rating-item">
-					<text class="rating-label">口味 🍽️</text>
+					<text class="rating-label">口味</text>
 					<view class="rating-stars">
 						<text v-for="n in 5" :key="n" class="star" 
 							  :class="{ 'filled': n <= Math.round(shop.tasteRating || 0) }">★</text>
@@ -54,7 +46,7 @@
 					<text class="rating-score">{{shop.tasteRating ? shop.tasteRating.toFixed(1) : '0.0'}}</text>
 				</view>
 				<view class="rating-item">
-					<text class="rating-label">价格 💰</text>
+					<text class="rating-label">价格</text>
 					<view class="rating-stars">
 						<text v-for="n in 5" :key="n" class="star" 
 							  :class="{ 'filled': n <= Math.round(shop.priceRating || 0) }">★</text>
@@ -62,7 +54,7 @@
 					<text class="rating-score">{{shop.priceRating ? shop.priceRating.toFixed(1) : '0.0'}}</text>
 				</view>
 				<view class="rating-item">
-					<text class="rating-label">卫生 🧹</text>
+					<text class="rating-label">卫生</text>
 					<view class="rating-stars">
 						<text v-for="n in 5" :key="n" class="star" 
 							  :class="{ 'filled': n <= Math.round(shop.hygieneRating || 0) }">★</text>
@@ -74,21 +66,7 @@
 			<button class="rate-btn" @click="showRatingPanel">我要评分</button>
 		</view>
 		
-		<!-- 菜品推荐 -->
-		<view class="dish-section" v-if="shop.dishes && shop.dishes.length > 0">
-			<view class="section-title">
-				<text>招牌菜品</text>
-			</view>
-			<scroll-view class="dish-scroll" scroll-x>
-				<view class="dish-list">
-					<view class="dish-item" v-for="(dish, index) in shop.dishes" :key="index">
-						<image class="dish-image" :src="dish.image" mode="aspectFill"></image>
-						<text class="dish-name">{{dish.name}}</text>
-						<text class="dish-price">¥{{dish.price}}</text>
-					</view>
-				</view>
-			</scroll-view>
-		</view>
+		
 		
 		<!-- 评论区 -->
 		<view class="comment-section">
@@ -114,11 +92,6 @@
 						<text class="comment-time">{{item.time}}</text>
 					</view>
 					<text class="comment-content">{{item.content}}</text>
-					<view class="comment-images" v-if="item.images && item.images.length > 0">
-						<image v-for="(img, imgIndex) in item.images" :key="imgIndex" 
-							   :src="img" mode="aspectFill" class="comment-image"
-							   @click="previewImage(item.images, imgIndex)"></image>
-					</view>
 					<view class="comment-footer">
 						<view class="like-btn" @click="toggleLike(index)" :class="{'liked': item.isLiked}">
 							<text class="like-icon">👍</text>
@@ -159,7 +132,7 @@
 				
 				<view class="panel-body">
 					<view class="panel-rating-item">
-						<text class="panel-rating-label">口味 🍽️</text>
+						<text class="panel-rating-label">口味</text>
 						<view class="panel-rating-stars">
 							<text v-for="n in 5" :key="n" class="panel-star" 
 								  :class="{ 'filled': n <= userRating.taste }"
@@ -167,7 +140,7 @@
 						</view>
 					</view>
 					<view class="panel-rating-item">
-						<text class="panel-rating-label">价格 💰</text>
+						<text class="panel-rating-label">价格</text>
 						<view class="panel-rating-stars">
 							<text v-for="n in 5" :key="n" class="panel-star" 
 								  :class="{ 'filled': n <= userRating.price }"
@@ -175,7 +148,7 @@
 						</view>
 					</view>
 					<view class="panel-rating-item">
-						<text class="panel-rating-label">卫生 🧹</text>
+						<text class="panel-rating-label">卫生</text>
 						<view class="panel-rating-stars">
 							<text v-for="n in 5" :key="n" class="panel-star" 
 								  :class="{ 'filled': n <= userRating.hygiene }"
@@ -191,6 +164,183 @@
 </template>
 
 <style>
+.container {
+	min-height: 100vh;
+	background-color: #f5f5f5;
+	position: relative;
+}
+
+.loading-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.9);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+.loading-spinner {
+	width: 60rpx;
+	height: 60rpx;
+	border: 6rpx solid #f3f3f3;
+	border-top: 6rpx solid #3498db;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+.loading-text {
+	margin-top: 20rpx;
+	color: #666666;
+	font-size: 28rpx;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.header {
+	background-color: #3498db;
+	padding: 20rpx;
+	display: flex;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+}
+
+.back-btn {
+	color: #ffffff;
+	font-size: 36rpx;
+	padding: 0 20rpx;
+}
+
+.header-title {
+	flex: 1;
+	color: #ffffff;
+	font-size: 36rpx;
+	font-weight: bold;
+	text-align: center;
+}
+
+.shop-info {
+	margin-bottom: 40rpx;
+}
+
+.shop-header {
+	margin-bottom: 20rpx;
+}
+
+.shop-name {
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 10rpx;
+	display: block;
+}
+
+.shop-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10rpx;
+	margin-top: 10rpx;
+}
+
+.tag {
+	padding: 4rpx 12rpx;
+	background-color: #eef7fd;
+	border-radius: 4rpx;
+	font-size: 24rpx;
+	color: #3498db;
+}
+
+.shop-description {
+	font-size: 28rpx;
+	color: #333;
+	line-height: 1.6;
+}
+
+.rating-section {
+	background-color: #f8f9fa;
+	border-radius: 16rpx;
+	padding: 30rpx;
+	margin-bottom: 40rpx;
+}
+
+.overall-rating {
+	text-align: center;
+	margin-bottom: 30rpx;
+}
+
+.rating-value {
+	font-size: 48rpx;
+	font-weight: bold;
+	color: #f39c12;
+}
+
+.stars {
+	margin: 10rpx 0;
+}
+
+.star {
+	color: #ddd;
+	font-size: 36rpx;
+}
+
+.star.filled {
+	color: #f39c12;
+}
+
+.review-count {
+	font-size: 24rpx;
+	color: #666;
+}
+
+.rating-details {
+	margin-bottom: 30rpx;
+}
+
+.rating-item {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20rpx;
+}
+
+.rating-label {
+	width: 120rpx;
+	font-size: 28rpx;
+	color: #333;
+}
+
+.rating-stars {
+	flex: 1;
+	display: flex;
+	margin: 0 20rpx;
+}
+
+.rating-score {
+	font-size: 28rpx;
+	color: #f39c12;
+}
+
+.rate-btn {
+	width: 100%;
+	height: 80rpx;
+	line-height: 80rpx;
+	text-align: center;
+	background-color: #3498db;
+	color: #fff;
+	border-radius: 40rpx;
+	font-size: 28rpx;
+}
+
 .rating-panel {
 	position: fixed;
 	top: 0;
@@ -198,15 +348,16 @@
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+	animation: fadeIn 0.3s ease-in-out;
 }
 
 .rating-panel-content {
 	background-color: #ffffff;
-	border-radius: 16rpx;
+	border-radius: 12rpx;
 	width: 80%;
 	max-width: 600rpx;
 	padding: 30rpx;
@@ -232,32 +383,49 @@
 }
 
 .panel-body {
-	display: flex;
-	flex-direction: column;
-	gap: 20rpx;
+	padding: 20rpx 0;
 }
 
 .panel-rating-item {
 	display: flex;
 	align-items: center;
-	gap: 20rpx;
+	margin-bottom: 30rpx;
+	padding: 20rpx;
+	background-color: #f8f9fa;
+	border-radius: 8rpx;
+	transition: all 0.3s ease;
+}
+
+.panel-rating-item:hover {
+	background-color: #e9ecef;
+	transform: translateX(10rpx);
 }
 
 .panel-rating-label {
 	width: 120rpx;
 	font-size: 28rpx;
-	color: #666666;
+	color: #333333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .panel-rating-stars {
+	flex: 1;
 	display: flex;
 	gap: 10rpx;
+	justify-content: center;
 }
 
 .panel-star {
 	font-size: 40rpx;
-	color: #dddddd;
-	padding: 10rpx;
+	color: #ddd;
 }
 
 .panel-star.filled {
@@ -265,13 +433,294 @@
 }
 
 .submit-rating-btn {
-	margin-top: 30rpx;
 	background-color: #3498db;
 	color: #ffffff;
+	border-radius: 8rpx;
+	font-size: 28rpx;
+	padding: 16rpx 0;
+	margin-top: 20rpx;
+}
+
+.dish-section {
+	background-color: #ffffff;
+	margin-top: 20rpx;
+	padding: 20rpx;
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	color: #333333;
+	margin-bottom: 20rpx;
+}
+
+.dish-scroll {
+	width: 100%;
+}
+
+.dish-list {
+	display: flex;
+	gap: 20rpx;
+	padding: 10rpx 0;
+}
+
+.dish-item {
+	flex-shrink: 0;
+	width: 200rpx;
+}
+
+.dish-image {
+	width: 200rpx;
+	height: 200rpx;
+	border-radius: 8rpx;
+}
+
+.dish-name {
+	font-size: 26rpx;
+	color: #333333;
+	margin-top: 10rpx;
+}
+
+.dish-price {
+	font-size: 24rpx;
+	color: #e74c3c;
+	margin-top: 6rpx;
+}
+
+/* 评论区样式 */
+.comment-section {
+	margin-top: 40rpx;
+}
+
+.section-title {
+	font-size: 32rpx;
+	font-weight: bold;
+	margin-bottom: 30rpx;
+}
+
+.comment-list {
+	margin-bottom: 30rpx;
+}
+
+.no-comment {
+	text-align: center;
+	padding: 40rpx 0;
+	color: #999;
+	font-size: 28rpx;
+}
+
+.comment-item {
+	margin-bottom: 30rpx;
+	padding-bottom: 30rpx;
+	border-bottom: 1rpx solid #eee;
+}
+
+.comment-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 16rpx;
+}
+
+.user-avatar {
+	width: 80rpx;
 	height: 80rpx;
-	line-height: 80rpx;
+	border-radius: 50%;
+	margin-right: 20rpx;
+}
+
+.comment-user-info {
+	flex: 1;
+}
+
+.user-name {
+	font-size: 28rpx;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 6rpx;
+	display: block;
+}
+
+.comment-rating {
+	display: flex;
+	align-items: center;
+}
+
+.comment-rating .star {
+	font-size: 24rpx;
+}
+
+.rating-text {
+	font-size: 24rpx;
+	color: #f39c12;
+	margin-left: 10rpx;
+}
+
+.comment-time {
+	font-size: 24rpx;
+	color: #999;
+}
+
+.comment-content {
+	font-size: 28rpx;
+	color: #333;
+	line-height: 1.6;
+	margin-bottom: 16rpx;
+	display: block;
+}
+
+.comment-footer {
+	display: flex;
+	align-items: center;
+}
+
+.like-btn {
+	display: flex;
+	align-items: center;
+	font-size: 24rpx;
+	color: #666;
+	margin-right: 30rpx;
+}
+
+.like-icon {
+	margin-right: 6rpx;
+}
+
+.like-count {
+	font-size: 24rpx;
+}
+
+.like-btn.liked {
+	color: #e74c3c;
+}
+
+.like-btn.liked .like-icon {
+	color: #e74c3c;
+}
+
+.delete-btn {
+	display: flex;
+	align-items: center;
+	font-size: 24rpx;
+	color: #666;
+}
+
+.delete-icon {
+	margin-right: 6rpx;
+}
+
+.comment-input-box {
+	display: flex;
+	align-items: center;
+	background-color: #f8f9fa;
+	border-radius: 40rpx;
+	padding: 10rpx 20rpx;
+}
+
+.comment-input-box.expanded {
+	background-color: #fff;
+	border: 1rpx solid #eee;
+	border-radius: 12rpx;
+	padding: 20rpx;
+}
+
+.input-wrapper {
+	flex: 1;
+}
+
+.comment-textarea {
+	width: 100%;
+	min-height: 120rpx;
+	font-size: 28rpx;
+	line-height: 1.5;
+}
+
+.submit-btn {
+	background-color: #3498db;
+	color: #ffffff;
 	border-radius: 40rpx;
 	font-size: 28rpx;
+	padding: 10rpx 30rpx;
+	margin-left: 20rpx;
+}
+.rating-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.rating-panel-content {
+    background-color: #ffffff;
+    border-radius: 12rpx;
+    width: 80%;
+    max-width: 600rpx;
+    padding: 30rpx;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30rpx;
+}
+
+.panel-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #333333;
+}
+
+.close-btn {
+    font-size: 40rpx;
+    color: #999999;
+    padding: 10rpx;
+}
+
+.panel-body {
+    padding: 20rpx 0;
+}
+
+.panel-rating-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30rpx;
+}
+
+.panel-rating-label {
+    width: 120rpx;
+    font-size: 28rpx;
+    color: #333333;
+}
+
+.panel-rating-stars {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 10rpx;
+}
+
+.panel-star {
+    font-size: 40rpx;
+    color: #ddd;
+}
+
+.panel-star.filled {
+    color: #f39c12;
+}
+
+.submit-rating-btn {
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 40rpx;
+    font-size: 28rpx;
+    padding: 16rpx 0;
+    margin-top: 20rpx;
 }
 </style>
 
@@ -285,6 +734,7 @@ export default {
 			newComment: '',
 			isCommentExpanded: false,
 			isLiking: false,
+			isLoading: true,
 			userRating: {
 				taste: 0,
 				price: 0,
@@ -298,7 +748,10 @@ export default {
 				priceRating: 0,
 				hygieneRating: 0,
 				reviewCount: 0,
-				dishes: []
+				dishes: [],
+				tags: [],
+				averagePrice: 0,
+				monthlySales: 0
 			},
 			comments: []
 		}
@@ -368,26 +821,58 @@ export default {
 			};
 		},
 		submitRating() {
-			if (!this.userRating.taste || !this.userRating.price || !this.userRating.hygiene) {
+			// 确保至少有一项评分不为0
+			if (this.userRating.taste === 0 && this.userRating.price === 0 && this.userRating.hygiene === 0) {
 				uni.showToast({
-					title: '请完成所有评分项',
+					title: '请至少评分一项',
 					icon: 'none'
 				});
 				return;
 			}
 			
-			// 计算平均评分
-			const avgRating = (this.userRating.taste + this.userRating.price + this.userRating.hygiene) / 3;
+			// 计算平均分时，只计算非0项
+			let totalScore = 0;
+			let validItems = 0;
 			
-			// TODO: 发送评分到服务器
-			console.log('提交评分:', this.userRating);
+			if (this.userRating.taste > 0) {
+				totalScore += this.userRating.taste;
+				validItems++;
+			}
 			
-			// 更新本地显示
-			this.shop.tasteRating = (this.shop.tasteRating * this.shop.reviewCount + this.userRating.taste) / (this.shop.reviewCount + 1);
-			this.shop.priceRating = (this.shop.priceRating * this.shop.reviewCount + this.userRating.price) / (this.shop.reviewCount + 1);
-			this.shop.hygieneRating = (this.shop.hygieneRating * this.shop.reviewCount + this.userRating.hygiene) / (this.shop.reviewCount + 1);
-			this.shop.rating = (this.shop.rating * this.shop.reviewCount + avgRating) / (this.shop.reviewCount + 1);
-			this.shop.reviewCount++;
+			if (this.userRating.price > 0) {
+				totalScore += this.userRating.price;
+				validItems++;
+			}
+			
+			if (this.userRating.hygiene > 0) {
+				totalScore += this.userRating.hygiene;
+				validItems++;
+			}
+			
+			// 计算平均分 - 即使所有项都是1星也能正常计算
+			const avgRating = validItems > 0 ? Number((totalScore / validItems).toFixed(1)) : 0;
+			
+			console.log('提交评分:', this.userRating, '平均分:', avgRating);
+			
+			// 使用精确计算更新评分
+			const newCount = this.shop.reviewCount + 1;
+			
+			// 更新各项评分 - 确保1星评分也能正常更新
+			if (this.userRating.taste > 0) {
+				this.shop.tasteRating = Number(((this.shop.tasteRating * this.shop.reviewCount + this.userRating.taste) / newCount).toFixed(1));
+			}
+			
+			if (this.userRating.price > 0) {
+				this.shop.priceRating = Number(((this.shop.priceRating * this.shop.reviewCount + this.userRating.price) / newCount).toFixed(1));
+			}
+			
+			if (this.userRating.hygiene > 0) {
+				this.shop.hygieneRating = Number(((this.shop.hygieneRating * this.shop.reviewCount + this.userRating.hygiene) / newCount).toFixed(1));
+			}
+			
+			// 更新总评分
+			this.shop.rating = Number(((this.shop.rating * this.shop.reviewCount + avgRating) / newCount).toFixed(1));
+			this.shop.reviewCount = newCount;
 			
 			uni.showToast({
 				title: '评分成功',
@@ -396,11 +881,13 @@ export default {
 			
 			this.hideRatingPanel();
 		},
-		getShopDetail() {
-			console.log('获取店铺ID:', this.shopId);
-			
-			// 模拟店铺数据
-			const shopsData = {
+		async getShopDetail() {
+			try {
+				console.log('获取店铺ID:', this.shopId);
+				this.isLoading = true;
+				
+				// 模拟店铺数据
+				const shopsData = {
 				101: {
 					id: 101,
 					name: '南洋八打',
@@ -468,10 +955,14 @@ export default {
 					]
 				}
 			};
+            // 模拟网络延迟
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
             // 获取店铺详情数据
             const shopDetail = shopsData[this.shopId];
             if (shopDetail) {
-                this.shop = shopDetail;
+                this.shop = {...shopDetail};
+                this.isLoading = false;
                 
                 // 模拟评论数据
                 const commentsData = {
@@ -515,14 +1006,19 @@ export default {
             this.comments = commentsData[this.shopId] || [];
             console.log('评论数据加载完成:', this.comments);
             } else {
-                uni.showToast({
-                    title: '店铺不存在',
-                    icon: 'none'
-                });
-                setTimeout(() => {
-                    this.goBack();
-                }, 1500);
+                throw new Error('店铺不存在');
             }
+        } catch (error) {
+            console.error('获取店铺详情失败:', error);
+            this.isLoading = false;
+            uni.showToast({
+                title: error.message || '获取店铺信息失败',
+                icon: 'none'
+            });
+            setTimeout(() => {
+                this.goBack();
+            }, 1500);
+        }
         },
         
         // 添加其他必要的方法
